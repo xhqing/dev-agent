@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### 变更（子项目角色口径更新为三级 agentLeader / subLeader / Worker，2026-11-25）
+
+- **为什么改**：用户 2026-11-25 把全团队 Leader / Worker 重定义为三级角色并写进全局 `~/.pi/agent/AGENTS.md`——agentLeader = Agent 项目主工作区 main、subLeader = 子项目主工作区 main、Worker = 任何项目的非 main 分支 worktree。本项目 `AGENTS.md` 还留着 2026-11-07 版「本会话是 Leader、子项目里的活儿交给 Worker」的二级口径，与全局规则冲突：它没说子项目主工作区 main 该由谁负责，按旧文字读会把 subLeader 当成 Worker。
+- **改了什么**：`AGENTS.md`「子项目的工作怎么开展」整节按三级角色重写——agentLeader 管自身项目 + 名下全部子项目（同步 local main、建 worktree、派单给 subLeader / Worker、合并 PR、发版、收尾），subLeader 只管自己那个子项目（ff 同步 local main、建删自身 worktree、派 Worker、合并自身 PR、发自身版本、回收 Worker，对上级与 sibling 只读），Worker 只干当前 worktree（不碰 local main、不建删 worktree、不合并 PR、不发版）；命名与生命周期同步新口径（subLeader 与子项目 Worker 叫 `Atlas-<子项目>`）；「子项目专属规则」「子项目文档」两处「Worker 靠它加载」改为「subLeader / Worker 靠它加载」；测试与回归防护网节的出题主体由未限定的「Leader」明确为 agentLeader。
+- **回归检查**：只改角色表述与加载主体，worktree 命名规则、git 纪律、测试定义权、子项目独立原则一字未动；版本号不动（文档类改动，不触发 bump / 发版）。
+
 ### 变更（T1 / T2 闭环归档：回归防护网与 Worker 测试约束全部落地，2026-11-13）
 
 - **为什么改**：用户要求把 `TODO.md` 里剩下的两条待办都办完。两条现已全部落地，按 TODO 纪律移入归档，不留已完成事项冒充活跃待办。
